@@ -1,13 +1,16 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.common.Result;
 import com.example.demo.dao.UserInfoDao;
 import com.example.demo.entry.UserInfo;
 import com.example.demo.service.UserInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 人员信息表(UserInfo)表服务实现类
@@ -15,6 +18,7 @@ import java.util.List;
  * @author GuoFeng
  * @since 2021-04-01 15:20:44
  */
+@Slf4j
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
@@ -27,8 +31,12 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @return 实例对象
      */
     @Override
-    public UserInfo queryById(BigInteger id) {
-        return this.userInfoDao.queryById(id);
+    public Map queryById(BigInteger id) {
+        Map<String, Object> successMap = Result.getSuccessMap();
+        UserInfo userInfo = this.userInfoDao.queryById(id);
+        successMap.put("date", userInfo);
+        log.info("<====通过主键查询单条数据:" + successMap);
+        return successMap;
     }
 
     /**
@@ -64,7 +72,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo update(UserInfo userInfo) {
         this.userInfoDao.update(userInfo);
-        return this.queryById(userInfo.getId());
+        return this.userInfoDao.queryById(userInfo.getId());
     }
 
     /**

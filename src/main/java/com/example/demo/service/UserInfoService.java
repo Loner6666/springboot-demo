@@ -4,6 +4,7 @@ import com.example.demo.entry.UserInfo;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 人员信息表(UserInfo)表服务接口
@@ -19,7 +20,7 @@ public interface UserInfoService {
      * @param id 主键
      * @return 实例对象
      */
-    UserInfo queryById(BigInteger id);
+    Map queryById(BigInteger id);
 
     /**
      * 查询多条数据
